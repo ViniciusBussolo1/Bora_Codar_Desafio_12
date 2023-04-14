@@ -100,6 +100,13 @@ export default function DragAndDrop() {
     updateTableDone(done)
   }
 
+  const getItemStyle = (isDragging: any, draggableStyle: any) => ({
+    outline: isDragging ? '2px solid purple' : '2px solid gray',
+    borderRadius: '4px',
+
+    ...draggableStyle,
+  })
+
   return (
     <div className="px-6 flex gap-12 justify-between">
       <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -119,13 +126,17 @@ export default function DragAndDrop() {
                       draggableId={item.id}
                       index={index}
                     >
-                      {(provided) => (
+                      {(provided, snapshot) => (
                         <li
                           key={item.id}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="flex flex-col gap-3"
+                          className="flex flex-col gap-3 p-2"
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style,
+                          )}
                         >
                           <span className="text-sm font-bold text-white">
                             {' '}
