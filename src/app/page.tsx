@@ -1,10 +1,12 @@
-import Image from 'next/image'
+import Link from 'next/link'
 
-import DragAndDrop from '@/components/DragAndDrop'
+import DragAndDrop from '@/components/DrangAndDrop/DragAndDrop'
+import FilterCards from '@/components/FilterCards/FilterCards'
+
+import Image from 'next/image'
 
 import ImgLogo from '../assets/Img_logo.svg'
 import ImgProfile from '../assets/Img_profile.svg'
-import ImgFilter from '../assets/Img_filter.svg'
 
 import {
   WrenchIcon,
@@ -12,7 +14,6 @@ import {
   UserGroupIcon,
   DeviceTabletIcon,
   PencilIcon,
-  MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline'
 
 export default function Home() {
@@ -31,15 +32,18 @@ export default function Home() {
                   </span>
                 </li>
                 <li className="flex gap-4 items-center cursor-pointer text-purple-300 hover:text-white">
+                  <ClipboardDocumentIcon className="w-5 h-5" />
+                  <Link
+                    href="/cards"
+                    className="font-medium text-base leading-5"
+                  >
+                    Adicionar
+                  </Link>
+                </li>
+                <li className="flex gap-4 items-center cursor-pointer text-purple-300 hover:text-white">
                   <UserGroupIcon className="w-5 h-5" />
                   <span className="font-medium text-base leading-5">
                     Equipes
-                  </span>
-                </li>
-                <li className="flex gap-4 items-center cursor-pointer text-purple-300 hover:text-white">
-                  <ClipboardDocumentIcon className="w-5 h-5" />
-                  <span className="font-medium text-base leading-5">
-                    Relatórios
                   </span>
                 </li>
                 <li className="flex gap-4 items-center cursor-pointer text-purple-300 hover:text-white">
@@ -65,29 +69,7 @@ export default function Home() {
           <Image src={ImgProfile} alt="Image Profile" width={64} height={64} />
         </div>
 
-        <div className="px-6 flex items-center gap-4">
-          <button className="bg-purple-700 px-8 py-3 rounded flex items-center gap-2 text-sm leading-6 text-white font-normal ">
-            <Image src={ImgFilter} alt="Image Filter" width={24} height={24} />
-            Filtrar
-          </button>
-
-          <div
-            id="div_search"
-            className="flex-1 flex items-center gap-3 px-6 py-3 focus-within:text-white rounded focus-within:outline focus-within:outline-[2px] focus-within:outline-purple-700 "
-          >
-            <MagnifyingGlassIcon
-              id="icon"
-              width={24}
-              height={24}
-              className="text-[#28272C]"
-            />
-            <input
-              type="text"
-              placeholder="Busque por cards, assuntos ou responsáveis..."
-              className="flex-1 text-base leading-4 px-1 py-2 bg-black-800 placeholder:text-[#757575] focus:outline-0"
-            />
-          </div>
-        </div>
+        <FilterCards />
 
         <DragAndDrop />
       </div>

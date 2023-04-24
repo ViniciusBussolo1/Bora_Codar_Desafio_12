@@ -112,7 +112,7 @@ export default function DragAndDrop() {
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="tableToDo">
           {(provided) => (
-            <div className="flex-1 pt-6 flex flex-col gap-6">
+            <div className="flex-1 py-6 px-4 flex flex-col gap-6 bg-gray-950 rounded">
               <span className="text-purple-700 text-xl font-bold">A fazer</span>
               <ul
                 className="w-full px-6 flex flex-col gap-8"
@@ -165,7 +165,7 @@ export default function DragAndDrop() {
         </Droppable>
         <Droppable droppableId="tableDoing">
           {(provided) => (
-            <div className="flex-1 pt-6 flex flex-col gap-6">
+            <div className="flex-1 py-6 px-4 flex flex-col gap-6 bg-gray-950 rounded">
               <span className="text-purple-700 text-xl font-bold">
                 Active Tasks
               </span>
@@ -181,13 +181,17 @@ export default function DragAndDrop() {
                       draggableId={item.id}
                       index={index}
                     >
-                      {(provided) => (
+                      {(provided, snapshot) => (
                         <li
                           key={item.id}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="flex flex-col gap-3"
+                          className="flex flex-col gap-3 p-2"
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style,
+                          )}
                         >
                           <span className="text-sm font-bold text-white">
                             {' '}
@@ -216,7 +220,7 @@ export default function DragAndDrop() {
         </Droppable>
         <Droppable droppableId="tableDone">
           {(provided) => (
-            <div className="flex-1 pt-6 flex flex-col gap-6">
+            <div className="flex-1 py-6 px-4 flex flex-col gap-6 bg-gray-950 rounded">
               <span className="text-purple-700 text-xl font-bold">
                 Active Tasks
               </span>
@@ -232,13 +236,17 @@ export default function DragAndDrop() {
                       draggableId={item.id}
                       index={index}
                     >
-                      {(provided) => (
+                      {(provided, snapshot) => (
                         <li
                           key={item.id}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="flex flex-col gap-3"
+                          className="flex flex-col gap-3 p-2"
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style,
+                          )}
                         >
                           <span className="text-sm font-bold text-white">
                             {' '}
