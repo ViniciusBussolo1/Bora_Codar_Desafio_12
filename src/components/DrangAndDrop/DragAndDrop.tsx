@@ -1,12 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import DialogAddCard from '../Dialog/DialogAddCard'
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DropResult,
 } from 'react-beautiful-dnd'
+
+import { PlusIcon } from '@heroicons/react/24/outline'
 
 interface tableProps {
   id: string
@@ -100,6 +103,25 @@ export default function DragAndDrop() {
     updateTableDone(done)
   }
 
+  function handleOpenModal() {
+    const buttonOpen = document.getElementById('buttonModalOpen')
+
+    const modal = document.querySelector('dialog')
+
+    buttonOpen!.onclick = () => {
+      modal?.showModal()
+    }
+  }
+
+  function handleModalClose() {
+    const buttonClose = document.getElementById('buttonModalClose')
+    const modal = document.querySelector('dialog')
+
+    buttonClose!.onclick = () => {
+      modal?.close()
+    }
+  }
+
   const getItemStyle = (isDragging: any, draggableStyle: any) => ({
     outline: isDragging ? '2px solid purple' : '2px solid gray',
     borderRadius: '4px',
@@ -113,7 +135,16 @@ export default function DragAndDrop() {
         <Droppable droppableId="tableToDo">
           {(provided) => (
             <div className="flex-1 py-6 px-4 flex flex-col gap-6 bg-gray-950 rounded">
-              <span className="text-purple-700 text-xl font-bold">A fazer</span>
+              <div className="flex items-center justify-between">
+                <span className="text-purple-700 text-xl font-bold">
+                  A fazer
+                </span>
+                <button id="buttonModalOpen" onClick={() => handleOpenModal()}>
+                  <PlusIcon className="w-7 h-7 text-purple-700" />
+                </button>
+                <DialogAddCard handleModalClose={() => handleModalClose()} />
+              </div>
+
               <ul
                 className="w-full px-6 flex flex-col gap-8"
                 ref={provided.innerRef}

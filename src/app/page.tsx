@@ -33,12 +33,9 @@ export default function Home() {
                 </li>
                 <li className="flex gap-4 items-center cursor-pointer text-purple-300 hover:text-white">
                   <ClipboardDocumentIcon className="w-5 h-5" />
-                  <Link
-                    href="/cards"
-                    className="font-medium text-base leading-5"
-                  >
+                  <span className="font-medium text-base leading-5">
                     Adicionar
-                  </Link>
+                  </span>
                 </li>
                 <li className="flex gap-4 items-center cursor-pointer text-purple-300 hover:text-white">
                   <UserGroupIcon className="w-5 h-5" />
