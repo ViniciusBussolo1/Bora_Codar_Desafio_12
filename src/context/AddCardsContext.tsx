@@ -1,7 +1,15 @@
 import { createContext, ReactNode, useState } from 'react'
 
-interface AddcardsContextDataProps {
-  handleAddCard: (data: Object) => void
+export interface dataProps {
+  title: string
+  description: string
+  techs: {
+    name: string
+  }[]
+}
+
+interface AddCardsContextDataProps {
+  handleAddCard: (data: dataProps) => void
   dataCard: Object
 }
 
@@ -9,14 +17,14 @@ interface AddCardsContextProvidersProps {
   children: ReactNode
 }
 
-export const AddCardsContext = createContext({} as AddcardsContextDataProps)
+export const AddCardsContext = createContext({} as AddCardsContextDataProps)
 
-export function AddCardscontextPovider({
+export function AddCardsContextProvider({
   children,
 }: AddCardsContextProvidersProps) {
   const [dataCard, setDataCard] = useState({})
 
-  function handleAddCard(data: Object) {
+  const handleAddCard = (data: dataProps) => {
     setDataCard(data)
   }
 

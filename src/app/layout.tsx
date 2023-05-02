@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { AddCardsContextProvider } from '@/context/AddCardsContext'
 
 import './globals.css'
 
@@ -9,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-purple-700 flex">{children}</body>
+      <body className="bg-purple-700 flex">
+        <AddCardsContextProvider>{children}</AddCardsContextProvider>
+      </body>
     </html>
   )
 }
