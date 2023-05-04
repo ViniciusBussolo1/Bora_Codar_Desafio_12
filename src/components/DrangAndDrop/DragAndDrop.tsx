@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import uuid from 'react-uuid'
+
 import DialogAddCard from '../Dialog/DialogAddCard'
 import {
   DragDropContext,
@@ -10,55 +12,22 @@ import {
 } from 'react-beautiful-dnd'
 
 import { PlusIcon } from '@heroicons/react/24/outline'
+import { AddCardsContext } from '@/context/AddCardsContext'
 
 interface tableProps {
   id: string
-  p: string
+  description: string
   title: string
+  techs: {
+    name: string
+  }[]
 }
 
-const items = [
-  {
-    id: '1',
-    title: '#boraCodar um Kanban 🧑‍💻',
-    p: 'Novo desafio do #boraCodar da Rocketseat, onde é proposto construir um quadro de Kanban.',
-  },
-  {
-    id: '2',
-    title: '#boraCodar um Kanban 🧑‍💻',
-    p: 'Novo desafio do #boraCodar da Rocketseat, onde é proposto construir um quadro de Kanban.',
-  },
-  {
-    id: '3',
-    title: '#boraCodar um Kanban 🧑‍💻',
-    p: 'Novo desafio do #boraCodar da Rocketseat, onde é proposto construir um quadro de Kanban.',
-  },
-  {
-    id: '4',
-    title: '#boraCodar um Kanban 🧑‍💻',
-    p: 'Novo desafio do #boraCodar da Rocketseat, onde é proposto construir um quadro de Kanban.',
-  },
-  {
-    id: '5',
-    title: '#boraCodar um Kanban 🧑‍💻',
-    p: 'Novo desafio do #boraCodar da Rocketseat, onde é proposto construir um quadro de Kanban.',
-  },
-  {
-    id: '6',
-    title: '#boraCodar um Kanban 🧑‍💻',
-    p: 'Novo desafio do #boraCodar da Rocketseat, onde é proposto construir um quadro de Kanban.',
-  },
-  {
-    id: '7',
-    title: '#boraCodar um Kanban 🧑‍💻',
-    p: 'Novo desafio do #boraCodar da Rocketseat, onde é proposto construir um quadro de Kanban.',
-  },
-]
-
 export default function DragAndDrop() {
-  const [tableToDo, updateTableToDo] = useState(items)
-  const [tableDoing, updateTableDoing] = useState<Array<tableProps>>([])
-  const [tableDone, updateTableDone] = useState<Array<tableProps>>([])
+  const [tableDoing, setTableDoing] = useState<Array<tableProps>>([])
+  const [tableDone, setTableDone] = useState<Array<tableProps>>([])
+
+  const { dataCard, setDataCard } = useContext(AddCardsContext)
 
   function handleOnDragEnd(result: DropResult) {
     const { destination, source } = result
@@ -75,7 +44,7 @@ export default function DragAndDrop() {
     }
 
     let add
-    const toDo = tableToDo
+    const toDo = dataCard
     const doing = tableDoing
     const done = tableDone
 
@@ -98,9 +67,9 @@ export default function DragAndDrop() {
       done.splice(destination.index, 0, add)
     }
 
-    updateTableToDo(toDo)
-    updateTableDoing(doing)
-    updateTableDone(done)
+    setDataCard(toDo)
+    setTableDoing(doing)
+    setTableDone(done)
   }
 
   function handleOpenModal() {
@@ -150,7 +119,7 @@ export default function DragAndDrop() {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                {tableToDo.map((item, index) => {
+                {dataCard.map((item, index) => {
                   return (
                     <Draggable
                       key={item.id}
@@ -174,15 +143,17 @@ export default function DragAndDrop() {
                             {item.title}
                           </span>
                           <p className="text-sm font-medium text-gray-500">
-                            {item.p}
+                            {item.description}
                           </p>
                           <div className="flex gap-2">
-                            <span className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700">
-                              rocketseat
-                            </span>
-                            <span className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700">
-                              desafio
-                            </span>
+                            {item.techs.map((tech) => (
+                              <span
+                                key={uuid()}
+                                className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700"
+                              >
+                                {tech.name}
+                              </span>
+                            ))}
                           </div>
                         </li>
                       )}
@@ -229,15 +200,17 @@ export default function DragAndDrop() {
                             {item.title}
                           </span>
                           <p className="text-sm font-medium text-gray-500">
-                            {item.p}
+                            {item.description}
                           </p>
                           <div className="flex gap-2">
-                            <span className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700">
-                              rocketseat
-                            </span>
-                            <span className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700">
-                              desafio
-                            </span>
+                            {item.techs.map((tech) => (
+                              <span
+                                key={uuid()}
+                                className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700"
+                              >
+                                {tech.name}
+                              </span>
+                            ))}
                           </div>
                         </li>
                       )}
@@ -284,15 +257,17 @@ export default function DragAndDrop() {
                             {item.title}
                           </span>
                           <p className="text-sm font-medium text-gray-500">
-                            {item.p}
+                            {item.description}
                           </p>
                           <div className="flex gap-2">
-                            <span className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700">
-                              rocketseat
-                            </span>
-                            <span className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700">
-                              desafio
-                            </span>
+                            {item.techs.map((tech) => (
+                              <span
+                                key={uuid()}
+                                className="bg-[#E2D6FF] py-1 px-2 rounded-lg text-xs text-purple-700"
+                              >
+                                {tech.name}
+                              </span>
+                            ))}
                           </div>
                         </li>
                       )}
